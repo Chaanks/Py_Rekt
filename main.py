@@ -12,8 +12,7 @@ import sound as Sound
 pygame.init()
 Command.Manager
 manager = Command.Manager()
-Sound.SoundManager
-sound = Sound.SoundManager()
+
 
 
 print "________________________________________"
@@ -24,6 +23,8 @@ print "   # ##    ####  ##        #             "
 print "   #   #   #     #  #      #             "
 print "   #    #  ####  #   #     #   v1.1      "
 print "________________________________________"
+
+print "Lance des commandes à distance sur un pc"
 
 manager.CMD_command('command')
 

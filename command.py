@@ -23,7 +23,9 @@ class Manager :
             'stop':self.CMD_stop,
             'volume+':self.CMD_volumeM,
             'volume-':self.CMD_volumeP,
-            'mamadou':self.CMD_mamadou
+            'mamadou':self.CMD_mamadou,
+            'blackScreen':self.CMD_blackScreen,
+            'mlg':self.CMD_mlg
         }
 
         self.command = collections.OrderedDict(sorted(self.command.items(), key=lambda t: t[0]))
@@ -77,6 +79,7 @@ class Manager :
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
 
     def CMD_mamadou (self, command):
+        pygame.mixer.init()
         pygame.mixer.music.load("Sound/SadTroll.mp3")
         pygame.mixer.music.play()
 
@@ -85,7 +88,7 @@ class Manager :
         pygame.display.flip()
 
         i = 0
-        while i <= 200:
+        while i <= 100:
             x= random.randint(0,610)
             y= random.randint(0,302)
             i += 1
@@ -103,3 +106,34 @@ class Manager :
         time.sleep(2)
         pygame.mixer.music.stop()
         pygame.display.quit()
+        pygame.init()
+
+    def CMD_blackScreen(self, command):
+        pygame.mouse.set_visible(0)
+        fen=pygame.display.set_mode((650,342),pygame.FULLSCREEN, pygame.NOFRAME)
+        time.sleep(30)
+        pygame.display.quit()
+        pygame.init()
+        pygame.mouse.set_visible(1)
+
+
+
+    def CMD_mlg (self, command):
+        pygame.mixer.quit()
+        pygame.mouse.set_visible(0)
+        movie = pygame.movie.Movie('mpg/mlg2.mpg')
+        screen = pygame.display.set_mode((854,480), pygame.NOFRAME | pygame.FULLSCREEN)
+        movie_surf = pygame.Surface((854,480)).convert()
+        movie.set_display(movie_surf, pygame.Rect(0,0,854,480),)
+        movie.play()
+
+        start = time.time()
+        i=0
+        while i < 19000:
+
+            screen.blit(movie_surf,(5,5))
+            pygame.display.update()
+            i+=1
+
+        pygame.display.quit()
+        pygame.init()
